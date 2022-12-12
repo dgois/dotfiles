@@ -1,0 +1,21 @@
+# Install these on work machines only
+{{- if eq .location "work-rsi" }}
+{{- end }}
+
+# Install these on home machines only
+{{- if eq .location "home" }}
+{{- end }}
+
+brew 'docker'
+brew 'docker-compose'
+brew 'git'
+brew 'colima'
+brew 'jenv'
+brew 'zplug'
+
+cask 'google-chrome'
+cask 'sublime-text'
+cask 'iterm2'
+cask 'intellij-idea'
+cask 'visual-studio-code'
+cask 'slack'
