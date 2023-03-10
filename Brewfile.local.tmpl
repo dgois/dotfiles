@@ -1,5 +1,11 @@
 # Install these on work machines only
 {{- if eq .location "work-rsi" }}
+brew 'teleport'
+brew 'openjdk@17'
+brew 'gradle'
+
+cask 'zoom'
+cask '1password'
 {{- end }}
 
 # Install these on home machines only
@@ -19,3 +25,6 @@ cask 'iterm2'
 cask 'intellij-idea'
 cask 'visual-studio-code'
 cask 'slack'
+cask 'postman'
+cask 'grammarly'
+cask 'evernote'

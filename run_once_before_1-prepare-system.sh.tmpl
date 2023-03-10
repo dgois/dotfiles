@@ -1,0 +1,34 @@
+#!/bin/bash -x
+
+if [[ $(xcode-select -v) ]]; then
+    echo "xcode is installed"
+else
+    echo "xcode is not installed"
+    
+    # Install xcode
+    xcode-select --install
+fi
+
+# Install Rosetta on Mac m1
+{{ if (and (eq .chezmoi.os "darwin") (eq .chezmoi.arch "arm64")) }}
+softwareupdate --install-rosetta --agree-to-license
+{{ end }}
+
+# If Homebrew is not installed on the system, it will be installed here
+if test ! $(which brew); then
+   printf '\n\n\e[33mHomebrew not found. \e[0mInstalling Homebrew...'
+   /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
+
+else
+  printf '\n\n\e[0mHomebrew found. Continuing...'
+
+fi
+
+# Update homebrew packages
+printf '\nInitiating Homebrew update...\n'
+brew update
+
+info_echo "Installing or updating chezmoi ..."
+brew bundle --file=- <<EOF
+    brew 'chezmoi'
+EOF
